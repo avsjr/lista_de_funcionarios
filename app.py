@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, jsonify
 import cx_Oracle
 
 app = Flask(__name__)
@@ -15,29 +15,38 @@ def index():
     cursor = connection.cursor()
 
     # Execute a consulta SQL na sua view de funcionários
-    query = "SELECT razaosocial, nomefunc, descrcencus, descrfuncao, email, telefone FROM ad_plvsiramal;"
+    query = "SELECT razaosocial, nomefunc, descrcencus, descrfuncao, email, telefone FROM ad_plvsiramal"
     cursor.execute(query)
 
-    # Recupere os dados e organize-os de acordo com a estrutura desejada
-    data = []
+    data = {}  # Usamos um dicionário para representar as empresas
     for row in cursor:
         razaosocial, descrcencus, nomefunc, descrfuncao, email, telefone = row
-        # Crie um dicionário com os campos desejados
-        record = {
-            'Nome_Empresa': razaosocial,
-            'departamento': descrcencus,
+        empresa = razaosocial
+        departamento = descrcencus
+        funcionario = {
             'Nome_Funcionario': nomefunc,
             'Cargo': descrfuncao,
             'Email': email,
             'Telefone': telefone
         }
-        data.append(record)
 
-    # Feche a conexão com o banco de dados
+        # Verificamos se a empresa já existe no dicionário
+        if empresa not in data:
+            data[empresa] = {}
+
+        # Verificamos se o departamento já existe na empresa
+        if departamento not in data[empresa]:
+            data[empresa][departamento] = []
+
+        # Adicionamos o funcionário ao departamento da empresa
+        data[empresa][departamento].append(funcionario)
+
+    # Feche a conexão com o banco de dados (deve estar fora do loop)
     cursor.close()
     connection.close()
 
     return render_template('index.html', data=data)
+    #return jsonify(data)
 
 if __name__ == '__main__':
     app.run()

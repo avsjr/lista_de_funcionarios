@@ -1,15 +1,33 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <title>Informações de Funcionários</title>
+    <meta charset="UTF-8">
+    <title>Lista de Funcionários</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Informações de Funcionários</h1>
-    <div>
-        <!-- Árvore de Funcionários -->
-        <!-- Você pode usar JavaScript/jQuery para criar a árvore dinamicamente -->
-    </div>
-
+    <h1>Lista de Funcionários</h1>
+    <ul id="tree">
+        {% for empresa, departamentos in data.items() %}
+            <li class="empresa">{{ empresa }}
+                <ul>
+                    {% for departamento, funcionarios in departamentos.items() %}
+                        <li class="departamento">{{ departamento }}
+                            <ul>
+                                {% for funcionario in funcionarios %}
+                                    <li class="funcionario">
+                                        {{ funcionario['Nome_Funcionario'] }} - {{ funcionario['Cargo'] }} - {{ funcionario['Email'] }} - {{ funcionario['Telefone'] }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>    
     <div>
         <!-- Campo de Busca -->
         <input type="text" id="search" placeholder="Buscar por nome">
