@@ -6,36 +6,26 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-    <h1>Lista de Funcionários</h1>
-    <ul id="tree">
-        {% for empresa, departamentos in data.items() %}
-            <li class="empresa">{{ empresa }}
-                <ul>
-                    {% for departamento, funcionarios in departamentos.items() %}
-                        <li class="departamento">{{ departamento }}
-                            <ul>
-                                {% for funcionario in funcionarios %}
-                                    <li class="funcionario">
-                                        {{ funcionario['Nome_Funcionario'] }} - {{ funcionario['Cargo'] }} - {{ funcionario['Email'] }} - {{ funcionario['Telefone'] }}
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </li>
+    <h1>Dados dos Funcionários</h1>
+    {% for empresa in dados %}
+    <h2 class="expand" onclick="toggleDepartamentos(this)">{{ empresa.empresa }} <button>Expandir/Recolher</button></h2>
+    <div class="departamentos hidden">
+        {% for departamento in empresa.departamentos %}
+            <h3 class="expand" onclick="toggleFuncionarios(this)">{{ departamento.departamento }} <button>Expandir/Recolher</button></h3>
+            <ul class="hidden">
+                {% for funcionario in departamento.funcionarios %}
+                    <li>Nome: {{ funcionario['nome_funcionario'] }}, Cargo: {{ funcionario['cargo'] }}, Email: {{ funcionario['email'] }}, Telefone: {{ funcionario['telefone'] }}</li>
+                {% endfor %}
+            </ul>
         {% endfor %}
-    </ul>    
-    <div>
-        <!-- Campo de Busca -->
-        <input type="text" id="search" placeholder="Buscar por nome">
-        <button id="search-button">Buscar</button>
-        <div id="search-results">
-            <!-- Os resultados da pesquisa serão exibidos aqui -->
-        </div>
     </div>
-
+    {% endfor %}
 </body>
 </html>

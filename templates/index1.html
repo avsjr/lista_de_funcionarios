@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Funcionários</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Lista de Funcionários</h1>
+    <table class="two-column-table">
+        <tbody>
+            {% for empresa in tree %}
+                {% if loop.index is divisibleby 2 %}
+                    <tr>
+                {% endif %}
+                <td class="empresa-column">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Empresa</th>
+                                <th>Departamento</th>
+                                <th>Nome do Funcionário</th>
+                                <th>Cargo</th>
+                                <th>Email</th>
+                                <th>Telefone</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="empresa-row">
+                                <td colspan="6">
+                                    <button class="expand-button">+</button>
+                                    {{ empresa.empresa }}
+                                </td>
+                            </tr>
+                            {% for departamento in empresa.departamentos %}
+                                <tr class="departamento-row">
+                                    <td colspan="6">
+                                        <button class="expand-button">+</button>
+                                        {{ departamento.departamento }}
+                                    </td>
+                                </tr>
+                                {% for funcionario in departamento.funcionarios %}
+                                    <tr class="funcionario-row">
+                                        <td>{{ funcionario.Nome_Funcionario }}</td>
+                                        <td>{{ funcionario.Cargo }}</td>
+                                        <td>{{ funcionario.Email }}</td>
+                                        <td>{{ funcionario.Telefone }}</td>
+                                    </tr>
+                                {% endfor %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </td>
+                {% if loop.index is divisibleby 2 %}
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+    <div>
+        <!-- Campo de Busca -->
+        <input type="text" id="search" placeholder="Buscar por nome">
+        <button id="search-button">Buscar</button>
+        <div id="search-results">
+            <!-- Os resultados da pesquisa serão exibidos aqui -->
+        </div>
+    </div>
+
+</body>
+</html>

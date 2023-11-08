@@ -15,10 +15,13 @@ def index():
     cursor = connection.cursor()
 
     # Execute a consulta SQL na sua view de funcionários
-    query = "SELECT razaosocial, nomefunc, descrcencus, descrfuncao, email, telefone FROM ad_plvsiramal"
+    query = "SELECT razaosocial, descrcencus, nomefunc, descrfuncao, email, telefone FROM ad_plvsiramal"
     cursor.execute(query)
 
-    data = {}  # Usamos um dicionário para representar as empresas
+    
+    # Usamos uma lista para representar a árvore de empresas, departamentos e funcionários
+    tree = []
+
     for row in cursor:
         razaosocial, descrcencus, nomefunc, descrfuncao, email, telefone = row
         empresa = razaosocial
@@ -30,23 +33,32 @@ def index():
             'Telefone': telefone
         }
 
-        # Verificamos se a empresa já existe no dicionário
-        if empresa not in data:
-            data[empresa] = {}
-
+        # Verificamos se a empresa já existe na árvore
+        try:
+            empresa_index = int(empresa)
+        except ValueError:
+            continue
+    
+        # Verificamos se a empresa já existe na árvore
+        empresa_index = int(empresa)
+        empresa_node = tree[empresa_index]
+        
         # Verificamos se o departamento já existe na empresa
-        if departamento not in data[empresa]:
-            data[empresa][departamento] = []
+        departamento_node = next((node for node in empresa_node['departamentos'] if node['departamento'] == departamento), None)
 
-        # Adicionamos o funcionário ao departamento da empresa
-        data[empresa][departamento].append(funcionario)
+        if departamento_node is None:
+            # Se o departamento não existe, adicionamos o departamento à empresa
+            departamento_node = {'departamento': departamento, 'funcionarios': []}
+            empresa_node['departamentos'].append(departamento_node)
 
-    # Feche a conexão com o banco de dados (deve estar fora do loop)
+        # Adicionamos o funcionário ao departamento
+        departamento_node['funcionarios'].append(funcionario)
+
+    # Feche a conexão com o banco de dados
     cursor.close()
     connection.close()
 
-    return render_template('index.html', data=data)
-    #return jsonify(data)
+    return render_template('index.html', tree=dict(tree))
 
 if __name__ == '__main__':
     app.run()
