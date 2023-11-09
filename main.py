@@ -17,7 +17,7 @@ def index():
     cursor = connection.cursor()
 
     # Execute a consulta SQL na sua view de funcionários
-    query = "SELECT razaosocial, descrcencus, nomefunc, descrfuncao, email, telefone FROM ad_plvsiramal"
+    query = "SELECT razaosocial, descrcencus, nomefunc, descrfuncao, email, telefone, celular FROM ad_plvsiramal"
     cursor.execute(query)
     data = cursor.fetchall()
 
@@ -30,7 +30,8 @@ def index():
             'nome_funcionario': row[2],
             'cargo': row[3],
             'email': row[4],
-            'telefone': row[5]
+            'telefone': row[5],
+            'celular': row[6]
         })
         
     # Feche a conexão com o banco de dados 
@@ -70,7 +71,18 @@ def index():
 
     if empresa_departamento is not None:
         dados_agrupados.append(empresa_departamento)
-        
+    
+    # Função para ordenar os funcionários pelo nome
+    def ordenar_funcionarios(funcionario):
+        return funcionario['nome_funcionario']
+
+    # Itera sobre as empresas
+    for empresa in dados_agrupados:  # Troque 'dados' por 'dados_agrupados'
+        # Itera sobre os departamentos da empresa
+        for departamento in empresa['departamentos']:
+            # Ordena os funcionários pelo nome
+            departamento['funcionarios'] = sorted(departamento['funcionarios'], key=ordenar_funcionarios)
+
     return render_template('index.html', dados=dados_agrupados)
 
 if __name__ == '__main__':

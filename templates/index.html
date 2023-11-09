@@ -3,24 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Lista de Funcionários</title>
+    <link rel="icon" href="/static/img/skala.ico" type="image/x-icon">
     <!--<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
     <script src="{{ url_for('static', filename='script.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    
 </head>
 <body>
-    <h1>Dados dos Funcionários</h1>
+    <div class="header-container">
+    <h1>Lista de Funcionários SKALA</h1>
+    </div>
+    <div class="empresa-container">
     {% for empresa in dados %}
-    <h2 class="expand" onclick="toggleDepartamentos(this)">{{ empresa.empresa }} <button>Expandir/Recolher</button></h2>
+    <h2 class="expand" onclick="toggleDepartamentos(this)"> <button>+</button> {{ empresa.empresa }} </h2>
         <div class="departamentos hidden">
             {% for departamento in empresa.departamentos %}
-                <h3 class="expand" onclick="toggleFuncionarios(this)">{{ departamento.departamento }} <button>Expandir/Recolher</button></h3>
+                <h3 class="expand" onclick="toggleFuncionarios(this)"> <button>+</button> {{ departamento.departamento }} </h3>
                 <div class="table-container hidden">
-                    <div class="table-row">
+                    <div class="table-row-header">
                         <span>Nome</span>
                         <span>Cargo</span>
                         <span>Email</span>
                         <span>Telefone</span>
+                        <span>Celular</span>
                     </div>
                     {% for funcionario in departamento.funcionarios %}
                         <div class="table-row">
@@ -28,22 +32,16 @@
                             <span>{{ funcionario['cargo'] }}</span>
                             <span>{{ funcionario['email'] }}</span>
                             <span>{{ funcionario['telefone'] }}</span>
+                            <span>{{ funcionario['celular'] }}</span>
                         </div>
                     {% endfor %}
                 </div>
             {% endfor %}
         </div>
-    
-    <!--<div class="departamentos hidden">
-        {% for departamento in empresa.departamentos %}
-            <h3 class="expand" onclick="toggleFuncionarios(this)">{{ departamento.departamento }} <button>Expandir/Recolher</button></h3>
-            <ul class="hidden">
-                {% for funcionario in departamento.funcionarios %}
-                    <li>Nome: {{ funcionario['nome_funcionario'] }}, Cargo: {{ funcionario['cargo'] }}, Email: {{ funcionario['email'] }}, Telefone: {{ funcionario['telefone'] }}</li>
-                {% endfor %}
-            </ul>
-        {% endfor %}
-    </div>-->
     {% endfor %}
+    </div>
+    <div class="footer-container">
+        <p>Desenvolvido por SKALA.TECH</p>
+    </div>
 </body>
 </html>

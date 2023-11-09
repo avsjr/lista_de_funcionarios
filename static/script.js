@@ -7,3 +7,4 @@ function toggleFuncionarios(header) {
     let funcionarios = header.nextElementSibling;
     funcionarios.classList.toggle('hidden');
 }
+
