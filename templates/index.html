@@ -3,20 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Lista de Funcionários</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!--<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
     <script src="{{ url_for('static', filename='script.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <style>
-        .hidden {
-            display: none;
-        }
-    </style>
+    
 </head>
 <body>
     <h1>Dados dos Funcionários</h1>
     {% for empresa in dados %}
     <h2 class="expand" onclick="toggleDepartamentos(this)">{{ empresa.empresa }} <button>Expandir/Recolher</button></h2>
-    <div class="departamentos hidden">
+        <div class="departamentos hidden">
+            {% for departamento in empresa.departamentos %}
+                <h3 class="expand" onclick="toggleFuncionarios(this)">{{ departamento.departamento }} <button>Expandir/Recolher</button></h3>
+                <div class="table-container hidden">
+                    <div class="table-row">
+                        <span>Nome</span>
+                        <span>Cargo</span>
+                        <span>Email</span>
+                        <span>Telefone</span>
+                    </div>
+                    {% for funcionario in departamento.funcionarios %}
+                        <div class="table-row">
+                            <span>{{ funcionario['nome_funcionario'] }}</span>
+                            <span>{{ funcionario['cargo'] }}</span>
+                            <span>{{ funcionario['email'] }}</span>
+                            <span>{{ funcionario['telefone'] }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    
+    <!--<div class="departamentos hidden">
         {% for departamento in empresa.departamentos %}
             <h3 class="expand" onclick="toggleFuncionarios(this)">{{ departamento.departamento }} <button>Expandir/Recolher</button></h3>
             <ul class="hidden">
@@ -25,7 +43,7 @@
                 {% endfor %}
             </ul>
         {% endfor %}
-    </div>
+    </div>-->
     {% endfor %}
 </body>
 </html>
