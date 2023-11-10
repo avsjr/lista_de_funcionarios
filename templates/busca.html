@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Resultados da Pesquisa</title>
+    <link rel="icon" href="/static/img/skala.ico" type="image/x-icon">
+    <!--<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Raleway:wght@300;400&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="header-search-container">
+    <h1>Resultados da Pesquisa para '{{ query }}'</h1>
+    </div>
+    <ul>
+        {% for funcionario in results %}
+            <li>{{ funcionario.nome_funcionario }} - {{ funcionario.cargo }} - {{ funcionario.departamento }} - {{ funcionario.email }} - {{ funcionario.telefone }} - {{ funcionario.celular }}</li>
+        {% endfor %}
+    </ul>
+    <div class="footer-container">
+        <p>Desenvolvido por SKALA.TECH</p>
+    </div>
+</body>
+</html>

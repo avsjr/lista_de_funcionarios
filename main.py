@@ -9,9 +9,10 @@ username = 'sankhya'
 password = 'q4l8s5m4'
 tns_name = '(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=oraclesrv.platinacsc.com.br)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=orcl)))'
 
+
 @app.route('/')
 def index():
-
+    global dados_agrupados
     # Conecta ao banco de dados Oracle
     connection = cx_Oracle.connect(username, password, tns_name)
     cursor = connection.cursor()
@@ -84,6 +85,23 @@ def index():
             departamento['funcionarios'] = sorted(departamento['funcionarios'], key=ordenar_funcionarios)
 
     return render_template('index.html', dados=dados_agrupados)
+from flask import Flask, render_template, request
+
+@app.route('/search')
+def search():
+    global dados_agrupados
+    query = request.args.get('query', '').lower()
+
+    # Filtrar os resultados com base na consulta
+    filtered_results = []
+    for empresa_departamento in dados_agrupados:
+        for departamento in empresa_departamento['departamentos']:
+            for funcionario in departamento['funcionarios']:
+                if query in funcionario['nome_funcionario'].lower():
+                    # Se o nome do funcionário contém a consulta, adiciona aos resultados filtrados
+                    filtered_results.append(funcionario)
+
+    return render_template('busca.html', query=query, results=filtered_results)
 
 if __name__ == '__main__':
     app.run()
