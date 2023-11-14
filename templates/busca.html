@@ -13,13 +13,34 @@
 </head>
 <body>
     <div class="header-search-container">
-    <h1>Resultados da Pesquisa para '{{ query }}'</h1>
+        <a href="{{ url_for('index') }}"><button class="back-button">Voltar</button></a>
+        <h1>Resultados da Pesquisa para '{{ query }}'</h1>
     </div>
-    <ul>
+    <div class="empresas-container">
+    <div class="table-container">
+        <div class="table-row-header">
+            <span>Nome</span>
+            <span>Cargo</span>
+            <span>Email</span>
+            <span>Telefone</span>
+            <span>Celular</span>
+        </div>
+            {% for funcionario in results %}
+            <div class="table-row">
+                    <span>{{ funcionario.nome_funcionario }}</span>
+                    <span>{{ funcionario.cargo }}</span>
+                    <span>{{ funcionario.email }}</span>
+                    <span>{{ funcionario.telefone }}</span>
+                    <span>{{ funcionario.celular }}</span>
+            </div>
+            {% endfor %}
+    </div>
+    </div>
+    <!--<ul>
         {% for funcionario in results %}
             <li>{{ funcionario.nome_funcionario }} - {{ funcionario.cargo }} - {{ funcionario.departamento }} - {{ funcionario.email }} - {{ funcionario.telefone }} - {{ funcionario.celular }}</li>
         {% endfor %}
-    </ul>
+    </ul>-->
     <div class="footer-container">
         <p>Desenvolvido por SKALA.TECH</p>
     </div>

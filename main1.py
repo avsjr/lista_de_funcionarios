@@ -1,24 +1,18 @@
 from flask import Flask, render_template, request
-from flask_apscheduler import APScheduler
 import cx_Oracle
+from itertools import groupby
+from flask import jsonify
 
 app = Flask(__name__)
-scheduler = APScheduler()
 
 # Configurações do banco de dados Oracle
 username = 'sankhya'
 password = 'q4l8s5m4'
 tns_name = '(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=oraclesrv.platinacsc.com.br)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=orcl)))'
 
-dados_agrupados = []  # Adicione esta linha para evitar o erro de variável não definida
 
 @app.route('/')
 def index():
-    global dados_agrupados
-    dados = atualizar_dados()
-    return render_template('index.html', dados=dados)
-
-def atualizar_dados():
     global dados_agrupados
     # Conecta ao banco de dados Oracle
     connection = cx_Oracle.connect(username, password, tns_name)
@@ -91,12 +85,7 @@ def atualizar_dados():
             # Ordena os funcionários pelo nome
             departamento['funcionarios'] = sorted(departamento['funcionarios'], key=ordenar_funcionarios)
 
-    return dados_agrupados
-
-@scheduler.task('interval', minutes=2)
-def atualizar_index():
-    global dados_agrupados
-    atualizar_dados() 
+    return render_template('index.html', dados=dados_agrupados)
 
 @app.route('/search')
 def search():
@@ -115,5 +104,4 @@ def search():
     return render_template('busca.html', query=query, results=filtered_results)
 
 if __name__ == '__main__':
-    scheduler.start()
-    app.run(debug=True)
+    app.run()
