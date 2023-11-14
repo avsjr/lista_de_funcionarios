@@ -25,7 +25,7 @@ def atualizar_dados():
     cursor = connection.cursor()
 
     # Execute a consulta SQL na sua view de funcionários
-    query = "SELECT razaosocial, descrcencus, nomefunc, descrfuncao, email, telefone, celular FROM ad_plvsiramal"
+    query = "SELECT nomefantasia, descrcencus, nomefunc, descrfuncao, email, telefone, celular FROM ad_plvsiramal"
     cursor.execute(query)
     data = cursor.fetchall()
 

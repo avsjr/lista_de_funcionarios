@@ -24,37 +24,38 @@
     </form>
     </div>
     </div>
-    <div class="empresas-container">
-        {% for empresa in dados %}
-            <div class="empresa">
-                <h2 class="expand" onclick="toggleDepartamentos(this)"> <button>+</button> {{ empresa.empresa }} </h2>
-                <div class="departamentos hidden">
-                    {% for departamento in empresa.departamentos %}
-                        <h3 class="expand" onclick="toggleFuncionarios(this)"> <button>+</button> {{ departamento.departamento }} </h3>
-                        <div class="table-container hidden">
-                            <div class="table-row-header">
-                                <span>Nome</span>
-                                <span>Cargo</span>
-                                <span>Email</span>
-                                <span>Telefone</span>
-                                <span>Celular</span>
-                            </div>
-                            {% for funcionario in departamento.funcionarios %}
-                                <div class="table-row">
-                                    <span>{{ funcionario['nome_funcionario'] }}</span>
-                                    <span>{{ funcionario['cargo'] }}</span>
-                                    <span>{{ funcionario['email'] }}</span>
-                                    <span>{{ funcionario['telefone'] }}</span>
-                                    <span>{{ funcionario['celular'] }}</span>
+    <div class="main-container">
+        <div class="empresas-container">
+            {% for empresa in dados %}
+                <div class="empresa">
+                    <h2 class="expand" onclick="toggleDepartamentos(this)"> <button>+</button> {{ empresa.empresa }} </h2>
+                    <div class="departamentos hidden">
+                        {% for departamento in empresa.departamentos %}
+                            <h3 class="expand" onclick="toggleFuncionarios(this)"> <button>+</button> {{ departamento.departamento }} </h3>
+                            <div class="table-container hidden">
+                                <div class="table-row-header">
+                                    <span>Nome</span>
+                                    <span>Cargo</span>
+                                    <span>Email</span>
+                                    <span>Telefone</span>
+                                    <span>Celular</span>
                                 </div>
-                            {% endfor %}
-                        </div>
-                    {% endfor %}
+                                {% for funcionario in departamento.funcionarios %}
+                                    <div class="table-row">
+                                        <span>{{ funcionario['nome_funcionario'] }}</span>
+                                        <span>{{ funcionario['cargo'] }}</span>
+                                        <span>{{ funcionario['email'] }}</span>
+                                        <span>{{ funcionario['telefone'] }}</span>
+                                        <span>{{ funcionario['celular'] }}</span>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
-
     <div class="footer-container">
         <p>Desenvolvido por SKALA.TECH</p>
     </div>
