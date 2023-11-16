@@ -27,7 +27,7 @@
     <div class="main-container">
         <div class="empresas-container">
             {% for empresa in dados %}
-                <div class="empresa">
+                <div class="empresas">
                     <h2 class="expand" onclick="toggleDepartamentos(this)"> <button>+</button> {{ empresa.empresa }} </h2>
                     <div class="departamentos hidden">
                         {% for departamento in empresa.departamentos %}
@@ -57,7 +57,7 @@
         </div>
     </div>
     <div class="footer-container">
-        <p>Desenvolvido por SKALA.TECH</p>
+        <p>Copyright © 2022 Grupo Skala - Desenvolvido por SKALA.TECH</p>
     </div>
 
 </body>
