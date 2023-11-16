@@ -12,9 +12,12 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="header-search-container">
+    <div class="header-container">
+        <a href="{{ url_for('index') }}">
+            <img class='logo_img' src="/static/img/logo-skala.png" alt="Descrição da Imagem">
+        </a>
+        <h1 class='logo_text'>Resultados da Pesquisa para '{{ query }}'</h1>
         <a href="{{ url_for('index') }}"><button class="back-button">Voltar</button></a>
-        <h1>Resultados da Pesquisa para '{{ query }}'</h1>
     </div>
     <div class="empresas-container">
     <div class="table-container">

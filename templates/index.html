@@ -13,10 +13,10 @@
 </head>
 <body>
     <div class="header-container">
-    <h1>Lista de Funcionários</h1>
-    <a href="{{ url_for('index') }}">
-    <img src="/static/img/logo-skala.png" alt="Descrição da Imagem">
-    </a>
+        <a href="{{ url_for('index') }}">
+            <img class='logo_img' src="/static/img/logo-skala.png" alt="Descrição da Imagem">
+        </a>
+        <h1 class='logo_text'>Lista de Funcionários</h1>
     <div class="search-container">
     <form action="{{ url_for('search') }}" method="GET">
         <input type="text" name="query" placeholder="Pesquisar funcionário">
