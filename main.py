@@ -93,7 +93,7 @@ def atualizar_dados():
 
     return dados_agrupados
 
-@scheduler.task('interval', minutes=2)
+@scheduler.task('interval', minutes=720)
 def atualizar_index():
     global dados_agrupados
     atualizar_dados() 

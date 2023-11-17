@@ -24,11 +24,9 @@ body, html {
 }
 
 .logo_text {
-    margin-left: 100px;
-    margin-top: 5px;
     color: #000000; 
     font-size: 20px;
-    flex-grow: 1; /* Faz com que o texto no meio ocupe o espaço disponível */
+    /*flex-grow: 1; /* Faz com que o texto no meio ocupe o espaço disponível */
     text-align: center;
 }
 
