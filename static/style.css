@@ -1,5 +1,7 @@
-body {
+body, html {
     margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Isso impede a barra de rolagem horizontal */
 }
 
 .main-container{
@@ -34,33 +36,6 @@ body {
     width: 120px;
     margin-top: 5px;
 }
-
-/* .header-search-container {
-    background-color: #8bc34b;
-    padding: 10px;
-    font-family: Roboto, sans-serif;
-    display: flex; 
-    align-items: center;
-} */
-
-/* .header-container h1,
-.header-search-container h1 {
-    color: rgb(0, 0, 0);
-    font-size: 18px;
-    margin-left: 50px;    
-} */
-
-/* .header-container img {
-    max-width: 87px;
-    max-height: 23px;
-    margin-left: 10px;
-    margin-right: 10px;
-    align-self: center;
-} */
-
-/* .header-container a {
-    align-self: center;
-} */
 
 .back-button {
     margin-right: 100px;
@@ -97,9 +72,6 @@ body {
     font-family: Roboto, sans-serif;
     font-size: 10px;   
     margin: 10px;
-    /*display: flex;
-     justify-content: center;
-    align-items: center;  */
 }
 
 .empresa {
@@ -120,7 +92,6 @@ body {
     font-family: 'Roboto', sans-serif; 
     font-size: 15px;
     font-weight: bold;
-    /* transition: background-color 0.3s ease;  */
     background-color: none; 
     color: #000000; 
     border: 1px solid #000000;
@@ -149,8 +120,6 @@ body {
 }
 
 .footer-container {
-    /* margin-top: 200px; */
-    /* position: relative; */
     bottom: 0;
     left: 0;
     width: 100%;
@@ -158,11 +127,9 @@ body {
     padding: 10px;
     text-align: center;
     font-family: Roboto, sans-serif;
-    /* margin: 0; */
 }
 
 .footer-container p {
     color: aliceblue;
     font-size: 12px;
-    
 }
