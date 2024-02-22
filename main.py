@@ -1,19 +1,15 @@
 from flask import Flask, render_template, request
 from flask_apscheduler import APScheduler
 import cx_Oracle
-import os
-from dotenv import load_dotenv
+from decouple import config
 
 app = Flask(__name__)
 scheduler = APScheduler()
 
-# Load environment variables from .env file
-load_dotenv()
-
 # Configurações do banco de dados Oracle
-username = os.getenv('DB_USERNAME')
-password = os.getenv('DB_PASSWORD')
-tns_name = os.getenv('DB_TNS_NAME')
+username = config('DB_USERNAME')
+password = config('DB_PASSWORD')
+tns_name = config('DB_TNS_NAME')
 
 dados_agrupados = []  # Adicione esta linha para evitar o erro de variável não definida
 
